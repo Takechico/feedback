@@ -1,35 +1,38 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import Box from "@mui/material/Box";
+import {Container} from "@mui/material";
+import {useFeedbacks} from "./lib/useFeedbacks";
+import {RatingFilter} from "./components/RatingFilter";
+import {FeedBackTable} from "./components/FeedBackTable";
+import {useFeedbackFilters} from "./lib/useFeedbackFilters";
+import {AppWrapper} from "./shared/ui/AppWrapper/AppWrapper";
+import {NewFeedbackButton} from "./components/NewFeedbackButton";
 
+/**
+ * Our entry point to the app. Shows feedbacks and filters.
+ * @constructor
+ */
 function App() {
-  const [count, setCount] = useState(0)
+    const {feedbackFilters, onFilterChange} = useFeedbackFilters();
+    const {isFeedbacksLoading, feedbacks, onFeedBackAdd} = useFeedbacks(feedbackFilters);
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    return (
+        <AppWrapper>
+            <Box sx={{
+                width: "100%",
+                height: "100vh",
+                background: '#fff'
+            }}>
+                <Container maxWidth='xl'>
+                    <RatingFilter
+                        selectedRating={feedbackFilters.rating}
+                        handleRatingFilter={(value: number) => onFilterChange('rating', value)}
+                    />
+                    <NewFeedbackButton onNewFeedbackAdd={onFeedBackAdd}/>
+                    <FeedBackTable data={feedbacks} isLoading={isFeedbacksLoading}/>
+                </Container>
+            </Box>
+        </AppWrapper>
+    )
 }
 
 export default App

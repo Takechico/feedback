@@ -1,40 +1,26 @@
 <?php
 
-namespace App\Ship\Exceptions;
+namespace App\Shared\Exceptions;
 
 use Throwable;
-use App\Ship\Facades\DwhLog;
 use Illuminate\Http\JsonResponse;
-use App\Ship\Parents\Exceptions\BaseException;
-use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Foundation\Exceptions\Handler;
 
-class Handler extends ExceptionHandler
+/**
+ * Main exception handler for our application
+ */
+class ApiExceptionHandler extends Handler
 {
-    /**
-     * A list of the exception types that are not reported.
-     *
-     * @var array<int, class-string<Throwable>>
-     */
     protected $dontReport = [
         //
     ];
 
-    /**
-     * A list of the inputs that are never flashed for validation exceptions.
-     *
-     * @var array<int, string>
-     */
     protected $dontFlash = [
         'current_password',
         'password',
         'password_confirmation',
     ];
 
-    /**
-     * Register the exception handling callbacks for the application.
-     *
-     * @return void
-     */
     public function register(): void
     {
         $this->reportable(function (Throwable $e) {
@@ -44,7 +30,7 @@ class Handler extends ExceptionHandler
 
     public function render($request, Throwable $e): JsonResponse
     {
-        if ($e instanceof BaseException) {
+        if ($e instanceof ApiException) {
             return $this->handleBaseException($e);
         }
 
@@ -56,16 +42,17 @@ class Handler extends ExceptionHandler
     }
 
     /**
-     * Handle custom BaseException and send it to DWH logging.
+     * Handle our custom exception. Can extend it, if we need.
      */
-    private function handleBaseException(BaseException $exception): JsonResponse
+    private function handleBaseException(ApiException $exception): JsonResponse
     {
-        $dwhLogValue = $exception->getLogValue();
-        DwhLog::log($dwhLogValue);
-
-        return response()->json([
+        $response = [
             'code' => $exception->getCode(),
-            'response' => $dwhLogValue->message,
-        ], $exception->getCode());
+            'message' => $exception->getMessage(),
+            'type' => $exception->getErrorType(),
+            'errors' => $exception->getErrors(),
+        ];
+
+        return response()->json($response, $exception->getCode());
     }
 }

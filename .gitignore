@@ -1,9 +1,10 @@
+# API
 api/.phpunit.cache
 api/node_modules
 api/public/build
 api/public/hot
 api/public/storage
-feedback-api/storage/*.key
+api/storage/*.key
 api/storage/pail
 api/vendor
 api/.env
@@ -22,28 +23,26 @@ api/.nova
 api/.vscode
 api/.zed
 
-
-# Logs
+# Client
 client/logs
-feedback-client/*.log
+client/*.log
 client/npm-debug.log*
 client/yarn-debug.log*
 client/yarn-error.log*
 client/pnpm-debug.log*
 client/lerna-debug.log*
-
 client/node_modules
 client/dist
 client/dist-ssr
-feedback-client/*.local
+client/*.local
 
 # Editor directories and files
 client/.vscode/*
 client/!.vscode/extensions.json
 client/.idea
 client/.DS_Store
-feedback-client/*.suo
-feedback-client/*.ntvs*
-feedback-client/*.njsproj
-feedback-client/*.sln
-feedback-client/*.sw?
+client/*.suo
+client/*.ntvs*
+client/*.njsproj
+client/*.sln
+client/*.sw?
