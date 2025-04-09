@@ -15,6 +15,13 @@ interface Props {
     onModelChange: (property: keyof NewFeedBack, value: string | number) => void;
 }
 
+/**
+ * Main feedback form, to handle update or create feedback
+ * @param model
+ * @param onSubmit
+ * @param onModelChange
+ * @constructor
+ */
 export const FeedbackForm: React.FC<Props> = ({model, onSubmit, onModelChange}) => {
     return (
         <FormThemeProvider>
@@ -35,8 +42,6 @@ export const FeedbackForm: React.FC<Props> = ({model, onSubmit, onModelChange}) 
                             onModelChange('rating', Number(newValue));
                         }}
                         max={5}
-                        // icon={<span style={{ fontSize: '1.5rem' }}>😂</span>}
-                        // emptyIcon={<span style={{ fontSize: '1.5rem', opacity: 0.55 }}>😂</span>}
                         IconContainerComponent={RatingIconContainer}
                     />
                     <FormTextArea

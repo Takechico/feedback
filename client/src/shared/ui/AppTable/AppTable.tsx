@@ -69,11 +69,11 @@ export const AppTableContainer = styled(TableContainer)(() => ({
 
 export const AppTableRow = styled(TableRow)(() => ({
     transition: 'background-color 0.2s ease',
-    height: '10px', // Увеличиваем высоту строки для лучшей читаемости
+    height: '10px',
     '&:hover': {
         backgroundColor: 'rgba(0, 0, 0, 0.04)',
     },
-    // Убираем последнюю границу
+
     '&:last-child td, &:last-child th': {
         borderBottom: 0,
     },

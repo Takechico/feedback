@@ -18,9 +18,6 @@ interface FormTextAreaProps extends Omit<TextFieldProps, 'multiline' | 'onChange
   showCharacterCount?: boolean;
 }
 
-/**
- * Enhanced form textarea component with character count and progress bar
- */
 export const FormTextArea: React.FC<FormTextAreaProps> = ({
   label,
   tooltip,

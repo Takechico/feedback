@@ -11,6 +11,12 @@ interface Props {
     onNewFeedbackAdd: (feedBack: Feedback) => void;
 }
 
+/**
+ * Button with feature of creating new feedback.
+ * Opens modal window with form to create new feedback.
+ * @param onNewFeedbackAdd
+ * @constructor
+ */
 export const NewFeedbackButton: React.FC<Props> = ({onNewFeedbackAdd}) => {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);

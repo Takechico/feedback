@@ -13,9 +13,6 @@ interface FormInputProps extends Omit<TextFieldProps, 'label'> {
   icon?: React.ReactNode;
 }
 
-/**
- * Enhanced form input component with consistent styling
- */
 export const FormInput: React.FC<FormInputProps> = ({
   label,
   required = false,

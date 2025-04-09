@@ -8,7 +8,7 @@ import {AlertColor} from "@mui/material";
 
 /**
  * Hook, for retrieving our Feedbacks.
- * Herew we can extend, with adding new, updating and so on.
+ * Here we can extend, with adding new, updating and so on.
  */
 export function useFeedbacks(
     filters: FeedbackFilter,
