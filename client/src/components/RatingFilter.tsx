@@ -13,9 +13,7 @@ interface Props {
 }
 
 /**
- * Component for filtering properties by number of bedrooms.
- * @param selectedBedrooms
- * @constructor
+ * Component for filtering feedbacks by buttons of rating
  */
 export const RatingFilter: React.FC<Props> = ({selectedRating, handleRatingFilter}) => {
     return (
