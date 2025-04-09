@@ -10,7 +10,7 @@ use App\Modules\Feedback\Interfaces\IFeedbackRepository;
 class GetFeedbackListAction extends Action
 {
     public function __construct(
-        private IFeedbackRepository $repository
+        private readonly IFeedbackRepository $repository
     )
     {
     }
