@@ -22,16 +22,25 @@ export const NewFeedbackButton: React.FC<Props> = ({onNewFeedbackAdd}) => {
         onSubmitFeedBack
     } = useFeedbackForm(onNewFeedbackAdd);
 
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+        const success = await onSubmitFeedBack(event);
+        if (success) {
+            handleClose();
+        }
+    };
+
     return (
-        <Box sx={{marginLeft: 'auto'}}>
-            <Button onClick={handleOpen}>Feedback +</Button>
+        <Box sx={{margin: 'auto'}}>
+            <Button color="success" variant="outlined" onClick={handleOpen}>Feedback +</Button>
             <AppModal
                 open={open}
                 title="New Feedback"
                 handleClose={handleClose}
-            > <FeedbackForm model={feedback}
-                            onSubmit={onSubmitFeedBack}
-                            onModelChange={onChange}/></AppModal>
+            >
+                <FeedbackForm model={feedback}
+                              onSubmit={handleSubmit}
+                              onModelChange={onChange}/>
+            </AppModal>
         </Box>
     )
 }

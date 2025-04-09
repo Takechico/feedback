@@ -8,7 +8,7 @@ import {NEW_FEEDBACK_INITIAL} from "../const/newFeedbackInitial";
  * Hook for working with new feedback, also can extend
  * to update version.
  */
-export const useFeedbackForm = (afterSubmit: (feedback: Feedback) => void) => {
+export const useFeedbackForm = (onSuccessCallback: (feedback: Feedback) => void) => {
     const [errors, setErrors] = useState<Array<any> | undefined>(undefined);
     const [feedback, setFeedBack] = useState<NewFeedBack>(NEW_FEEDBACK_INITIAL);
     const [isFeedbackCreating, setIsFeedbackCreating] = useState<boolean>(false);
@@ -23,14 +23,28 @@ export const useFeedbackForm = (afterSubmit: (feedback: Feedback) => void) => {
     const onSubmitFeedBack = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         setIsFeedbackCreating(true);
-        fetchInstance.post<ApiResponse<Feedback>>('/api/feedback', feedback).then((answer) => {
-            if (answer.code === 200) {
-                afterSubmit(answer.data);
-            } else if (answer.code === 404) {
-                setErrors(answer.errors);
+
+        try {
+            const response = await fetchInstance.post<ApiResponse<Feedback>>('/api/feedback', feedback);
+
+            if (response.code === 200) {
+                setIsFeedbackCreating(false);
+                if (onSuccessCallback) {
+                    onSuccessCallback(response.data);
+                }
+                setFeedBack(NEW_FEEDBACK_INITIAL);
+                return true;
+            } else if (response.code === 404) {
+                setErrors(response.errors);
             }
+
             setIsFeedbackCreating(false);
-        });
+            return false;
+        } catch (error) {
+            console.error('Failed to submit feedback:', error);
+            setIsFeedbackCreating(false);
+            return false;
+        }
     }
 
     return {
